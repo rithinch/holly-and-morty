@@ -15,6 +15,10 @@ class Settings(BaseSettings):
     cosmos_connection_string: Optional[str] = None
     cosmos_database_name: str = "holly-morty-db"
     
+    # Anthropic Settings
+    anthropic_api_key: Optional[str] = None
+    anthropic_model: str = "claude-sonnet-4-5-20250929"
+    
     class Config:
         env_file = ".env"
         case_sensitive = False

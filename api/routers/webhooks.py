@@ -4,10 +4,12 @@ import hmac
 from hashlib import sha256
 import json
 import logging
+from datetime import datetime
 
 from models.elevenlabs import ElevenLabsWebhook
 from core.config import settings
 from core.cosmos import cosmos_client, Containers
+from services.profile_extraction import profile_extractor
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/webhooks", tags=["webhooks"])
@@ -102,11 +104,15 @@ async def holly_conversation_webhook(request: Request):
     # Process only post_call_transcription events
     if webhook_data["type"] == "post_call_transcription":
         conversation_id = webhook_data['data']['conversation_id']
+        user_id = webhook_data['data'].get('user_id', conversation_id)  # fallback to conversation_id
+        transcript = webhook_data['data'].get('transcript', [])
         
         logger.info("📞 POST CALL TRANSCRIPTION RECEIVED")
         logger.info(f"Agent ID: {webhook_data['data']['agent_id']}")
         logger.info(f"Conversation ID: {conversation_id}")
+        logger.info(f"User ID: {user_id}")
         logger.info(f"Status: {webhook_data['data']['status']}")
+        logger.info(f"Transcript turns: {len(transcript)}")
         
         # Store in Cosmos DB conversations container
         try:
@@ -119,6 +125,40 @@ async def holly_conversation_webhook(request: Request):
         except Exception as e:
             logger.error(f"Failed to store conversation in Cosmos DB: {e}")
             # Don't fail the webhook if storage fails
+        
+        # Extract profile from conversation using Claude
+        if transcript:
+            try:
+                logger.info(f"🤖 Extracting profile from conversation transcript...")
+                extracted_profile = await profile_extractor.extract_profile(
+                    transcript=transcript,
+                    user_id=user_id,
+                    conversation_id=conversation_id
+                )
+                
+                if extracted_profile:
+                    # Add metadata
+                    extracted_profile.id = user_id
+                    extracted_profile.created_at = datetime.utcnow()
+                    extracted_profile.updated_at = datetime.utcnow()
+                    
+                    # Store profile in Cosmos DB
+                    profile_dict = extracted_profile.model_dump(mode='json')
+                    await cosmos_client.upsert_item(
+                        container=Containers.PROFILES,
+                        item=profile_dict,
+                        partition_key_value=user_id
+                    )
+                    logger.info(f"✅ Profile extracted and stored: {user_id} (status: {extracted_profile.status})")
+                else:
+                    logger.warning(f"Profile extraction returned None for conversation {conversation_id}")
+                    
+            except Exception as e:
+                logger.error(f"Failed to extract or store profile: {e}")
+                # Don't fail the webhook if profile extraction fails
+        else:
+            logger.warning(f"No transcript available for profile extraction")
+            
     else:
         logger.info(f"Received webhook event of type: {webhook_data['type']} (not processing)")
     
