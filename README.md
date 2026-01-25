@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/56/30d26c7d-d2a5-4249-b60d-25c6ade98529.png" alt="Saturn & EF Hackathon" width="400" />
+</div>
+
 # 🎙️ Holly and Morty
 
 > ✨ Conversational Agents for Wealth Advisors
