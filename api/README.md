@@ -63,10 +63,17 @@ The API will be available at `http://localhost:8000`
 docker build -t holly-and-morty-api .
 ```
 
+### Run with environment file
+```bash
+docker run -p 8000:8000 --env-file .env holly-and-morty-api
+```
+
 ### Run with environment variables
 ```bash
 docker run -p 8000:8000 \
   -e ELEVENLABS_WEBHOOK_SECRET=your_secret_here \
+  -e COSMOS_CONNECTION_STRING=your_cosmos_connection_string \
+  -e ANTHROPIC_API_KEY=your_anthropic_key \
   holly-and-morty-api
 ```
 
