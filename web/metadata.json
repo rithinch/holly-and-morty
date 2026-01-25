@@ -1,0 +1,8 @@
+{
+  "name": "Holly & Morty - Financial Navigation",
+  "description": "A premium financial advice platform featuring dual-agent support (Holly for listening, Morty for strategy) with a sleek SaaS dashboard and robust profile management.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

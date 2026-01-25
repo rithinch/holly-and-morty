@@ -70,7 +70,51 @@ By making the assembly line of financial advice **10x more efficient**, we can d
 - **🎨 Interactive API Docs** - Beautiful Scalar documentation interface
 - **🐳 Docker Ready** - Containerized deployment with environment-based configuration
 - **🔍 Advanced Querying** - Search by status, date ranges, employment, risk profile, net worth, and more
+## 🌐 Live Demo
 
+**🚀 Access the deployed application:** [https://holly-morty-financial-navigation-907277113728.us-west1.run.app](https://holly-morty-financial-navigation-907277113728.us-west1.run.app)
+
+### 📸 Application Screenshots
+
+#### Profile Details & Extraction
+Detailed client profile view showing AI-extracted financial information from voice conversations with Holly.
+
+<div align="center">
+  <img src="./screenshots/onboarding.png" alt="Profile Details" width="800" />
+</div>
+
+#### Profile Details & Extraction
+Detailed client profile view showing AI-extracted financial information from voice conversations with Holly.
+
+<div align="center">
+  <img src="./screenshots/voice-agent.png" alt="Profile Details" width="800" />
+</div>
+
+<div align="center">
+  <img src="./screenshots/profile-details.png" alt="Profile Details" width="800" />
+</div>
+
+#### User Dashboard
+The user dashboard provides a comprehensive view of financial profile status, conversations, and personalized insights.
+
+<div align="center">
+  <img src="./screenshots/client-dashboard.png" alt="Client Dashboard" width="800" />
+</div>
+
+#### Advisor Dashboard - Pipeline View
+Advisors can view and manage all client profiles with advanced filtering by status, risk profile, employment, net worth, and more.
+
+<div align="center">
+  <img src="./screenshots/advisor-dashboard-pipeline.png" alt="Advisor Dashboard - Pipeline" width="800" />
+</div>
+
+
+#### Advanced Filtering & Search
+Search capabilities to filter clients by name, status, risk attitude, employment status, income range, and net worth.
+
+<div align="center">
+  <img src="./screenshots/advanced-filtering.png" alt="Advanced Filtering" width="800" />
+</div>
 ## 🏗️ Architecture
 
 ```
